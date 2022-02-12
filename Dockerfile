@@ -14,25 +14,37 @@ ENV OVERMIND_VERSION=${OVERMIND_VERSION}
 
 # install base dependencies
 RUN apt-get update && apt-get upgrade -y && \
-  apt-get install -y apt-utils && \
-  apt-get install -y lsb-core curl libgconf-2-4 curl libreadline-dev gnupg2 wget ca-certificates vim libicu66 sysstat && \
-  # postgres 11 installation
-  # wget -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-  sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
-  curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
-  # echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" | tee /etc/apt/sources.list.d/postgres.list && \
-  apt-get update && apt-get upgrade -y && \
-  # apt-get install -y gnupg && \
-  # apt-get install -y postgresql-11 && \
-  sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
-  apt -y update && \
-  apt-get autoremove && \
-  apt-cache search postgresql | grep postgresql && \
-  # wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \ 
-  apt-get install -y postgresql postgresql-contrib && \
-  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-  postgres psql -c "SELECT version();" && \
-  systemctl status postgresql.service
+  apt-get install -y apt-utils dialog && \
+  apt-get install -y lsb-core curl libgconf-2-4 curl libreadline-dev gnupg2 wget ca-certificates vim libicu66 sysstat
+
+  # # postgres 11 installation
+  # # wget -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+  # sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
+  # curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+  # # echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" | tee /etc/apt/sources.list.d/postgres.list && \
+  # apt-get update && apt-get upgrade -y && \
+  # # apt-get install -y gnupg && \
+  # # apt-get install -y postgresql-11 && \
+  # sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
+  # apt -y update && \
+  # apt-get autoremove && \
+  # apt-cache search postgresql | grep postgresql && \
+  # # wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \ 
+  # apt-get install -y postgresql postgresql-contrib && \
+
+  # postgres latest installation as per https://www.postgresql.org/download/linux/ubuntu/
+# RUN apt-get -y install postgresql-12
+RUN apt-get -y install postgresql-client-12
+
+# RUN  sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
+#   wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+#   apt-get update && \
+#   apt-get -y install postgresql
+
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# RUN postgres psql -c "SELECT version();" && \
+#   systemctl status postgresql.service
 
 # nodejs npm Node.js
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
