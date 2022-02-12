@@ -12,6 +12,23 @@ ENV LUCKY_VERSION=${LUCKY_VERSION}
 ARG OVERMIND_VERSION=v2.2.2
 ENV OVERMIND_VERSION=${OVERMIND_VERSION}
 
+ARG USERNAME=lucky_app_user
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+ENV USERNAME=$USERNAME
+ENV USER_UID=$USER_UID
+ENV USER_GID=$USER_GID
+
+# Create the user
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    # Add sudo support.
+    && apt-get update \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+
 # install base dependencies
 RUN apt-get update && apt-get upgrade -y && \
   apt-get install -y apt-utils dialog && \
@@ -77,5 +94,11 @@ RUN apt-get update && apt-get upgrade -y && \
 COPY . /app
 
 RUN script/misc_setup
+
+# WORKDIR /myapp
+RUN chown -R $USER_UID:$USER_GID /app
+
+# Set the default user.
+USER $USERNAME
 
 EXPOSE 3001
