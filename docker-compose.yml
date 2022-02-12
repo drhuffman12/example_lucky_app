@@ -23,7 +23,7 @@ services:
       DB_USERNAME: lucky
       DB_PASSWORD: developer
     volumes:
-      - .:/data
+      - .:/app
     # command: echo "Crystal Version" && crystal -v && \
     #   echo "Node Version" && node -v &&  \
     #   echo "NPM Version" && npm -v &&  \
