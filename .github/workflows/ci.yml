@@ -1,4 +1,4 @@
-name: my_app CI
+name: lucky_app CI
 
 on:
   push:
@@ -8,22 +8,37 @@ on:
 
 jobs:
   check-format:
+    strategy:
+      fail-fast: false
+      matrix:
+        crystal_version:
+          - 1.2.2
+        experimental:
+          - false
     runs-on: ubuntu-latest
-    container:
-      image: crystallang/crystal:1.2.2
+    continue-on-error: ${{ matrix.experimental }}
     steps:
       - uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: ${{ matrix.crystal_version }}
       - name: Format
         run: crystal tool format --check
 
   specs:
+    strategy:
+      fail-fast: false
+      matrix:
+        crystal_version:
+          - 1.2.2
+        experimental:
+          - false
     runs-on: ubuntu-latest
-    container:
-      image: crystallang/crystal:1.2.2
     env:
       LUCKY_ENV: test
       DB_HOST: postgres
-
+    continue-on-error: ${{ matrix.experimental }}
     services:
       postgres:
         image: postgres:12-alpine
@@ -40,19 +55,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
-    - name: Install PostgreSQL client
-      run: |
-        apt-get update
-        apt-get -yqq install libpq-dev postgresql-client
-    - name: Install browser
-      run: apt-get -yqq install chromium-browser
-
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '12.x'
-    - name: "Install yarn"
-      run: npm install -g yarn
+    - name: Install Crystal
+        uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: ${{ matrix.crystal_version }}
 
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
@@ -90,22 +96,21 @@ jobs:
       if: steps.crystal-cache.outputs.cache-hit != 'true'
       run: shards check || shards install
 
-    ## TODO: Uncomment below sections after basic Lucky app setup:
-    # - name: Install yarn packages
-    #   if: steps.node-cache.outputs.cache-hit != 'true'
-    #   run: yarn install --frozen-lockfile --no-progress
-    # - name: Compiling assets
-    #   run: yarn prod
+    - name: Install yarn packages
+      if: steps.node-cache.outputs.cache-hit != 'true'
+      run: yarn install --frozen-lockfile --no-progress
+    - name: Compiling assets
+      run: yarn prod
 
-    # - name: Build lucky_tasks
-    #   if: steps.crystal-cache.outputs.cache-hit != 'true'
-    #   run: crystal build tasks.cr -o ./lucky_tasks
+    - name: Build lucky_tasks
+      if: steps.crystal-cache.outputs.cache-hit != 'true'
+      run: crystal build tasks.cr -o ./lucky_tasks
 
-    # - name: Prepare database
-    #   run: |
-    #     ./lucky_tasks db.create
-    #     ./lucky_tasks db.migrate
-    #     ./lucky_tasks db.seed.required_data
+    - name: Prepare database
+      run: |
+        ./lucky_tasks db.create
+        ./lucky_tasks db.migrate
+        ./lucky_tasks db.seed.required_data
 
-    # - name: Run tests
-    #   run: SPEC_VERBOSE=1 crystal spec
+    - name: Run tests
+      run: crystal spec
