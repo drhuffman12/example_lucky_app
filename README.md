@@ -71,3 +71,10 @@ From the Host OS terminal, open a terminal into the container's image:
 
 From the Container's terminal, enter the following to run the tests:
 * `crystal spec`
+
+---
+## Versioning
+
+* To update the version, edit the `shard.yml` file's `version` value.
+
+* To view the version, run the `lucky my_app_task.version` task.
