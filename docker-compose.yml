@@ -37,7 +37,7 @@ services:
     ports:
       - 3001:3001
       - 5000:5000
-    command: bash -c "script/setup_db && lucky dev"
+    command: bash -c "script/setup && lucky dev"
 
 volumes:
   db:
