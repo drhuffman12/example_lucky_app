@@ -1,4 +1,4 @@
-name: lucky_app CI
+name: my_app CI
 
 on:
   push:
