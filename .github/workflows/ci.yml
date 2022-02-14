@@ -90,11 +90,12 @@ jobs:
       if: steps.crystal-cache.outputs.cache-hit != 'true'
       run: shards check || shards install
 
-    - name: Install yarn packages
-      if: steps.node-cache.outputs.cache-hit != 'true'
-      run: yarn install --frozen-lockfile --no-progress
-    - name: Compiling assets
-      run: yarn prod
+    ## TODO: Uncomment 'Install yarn packages' after Lucky app setup:
+    # - name: Install yarn packages
+    #   if: steps.node-cache.outputs.cache-hit != 'true'
+    #   run: yarn install --frozen-lockfile --no-progress
+    # - name: Compiling assets
+    #   run: yarn prod
 
     - name: Build lucky_tasks
       if: steps.crystal-cache.outputs.cache-hit != 'true'
