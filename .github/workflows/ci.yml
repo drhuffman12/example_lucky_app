@@ -131,6 +131,7 @@ jobs:
       run: crystal build tasks.cr -o ./lucky_tasks
 
     - name: Prepare database
+      if: steps.crystal-cache.outputs.cache-hit != 'true'
       run: |
         ./lucky_tasks db.create
         ./lucky_tasks db.migrate
