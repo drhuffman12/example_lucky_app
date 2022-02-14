@@ -116,11 +116,14 @@ jobs:
 
     - name: Install yarn packages
       if: steps.node-cache.outputs.cache-hit != 'true'
-      run: yarn install --frozen-lockfile --no-progress
+      run: |
+        yarn add laravel-mix@latest
+        yarn install --frozen-lockfile --no-progress
+
     - name: Compiling assets
       run: |
-        yarn install
-        yarn add laravel-mix@latest
+        # yarn install
+        # yarn add laravel-mix@latest
         yarn prod
 
     - name: Build lucky_tasks
