@@ -4,6 +4,9 @@ This is an example dockerized Lucky Framework app, initialized as an `full` (not
 
 Next steps: Add your migrations/scaffolds/tests/etc, as desired.
 
+TODO:
+- [ ] Unpend the 3 pend'ed tests and fix them (db conn issues).
+
 ---
 ## Build the container image and launch it
 * `docker-compose build`
