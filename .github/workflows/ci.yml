@@ -111,11 +111,11 @@ jobs:
           ${{ runner.os }}-crystal-
 
     - name: Install shards
-      if: steps.crystal-cache.outputs.cache-hit != 'true'
+      # if: steps.crystal-cache.outputs.cache-hit != 'true'
       run: shards check || shards install
 
     - name: Install yarn packages
-      if: steps.node-cache.outputs.cache-hit != 'true'
+      # if: steps.node-cache.outputs.cache-hit != 'true'
       run: |
         yarn add laravel-mix@latest
         yarn install --frozen-lockfile --no-progress
@@ -127,11 +127,11 @@ jobs:
         yarn prod
 
     - name: Build lucky_tasks
-      if: steps.crystal-cache.outputs.cache-hit != 'true'
+      # if: steps.crystal-cache.outputs.cache-hit != 'true'
       run: crystal build tasks.cr -o ./lucky_tasks
 
     - name: Prepare database
-      if: steps.crystal-cache.outputs.cache-hit != 'true'
+      # if: steps.crystal-cache.outputs.cache-hit != 'true'
       run: |
         ./lucky_tasks db.create
         ./lucky_tasks db.migrate
