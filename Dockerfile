@@ -57,7 +57,7 @@ RUN apt-get install -y dirmngr gpg curl gawk
 # Cleanup re apt:
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# # Create the user
+# Create the user
 RUN adduser --shell /bin/bash --home /home/$USERNAME --disabled-password $USERNAME
 
 # Add sudo support
@@ -68,6 +68,10 @@ RUN apt-get update \
 
 ENV PATH="${PATH}:/home/$USERNAME/.asdf/shims:/home/$USERNAME/.asdf/bin"
 ENV NODEJS_CHECK_SIGNATURES=no
+
+# Install postgres client
+# RUN apt-get update && apt-get install -y postgresql postgresql-contrib
+RUN apt-get update && apt-get install -y postgresql-client-12 postgresql-contrib
 
 # Install Lucky system dependencies, as per https://luckyframework.org/guides/getting-started/installing#ubuntu
 RUN apt-get install -y libc6-dev libevent-dev libpcre2-dev libpcre3-dev libpng-dev libssl-dev libyaml-dev zlib1g-dev
