@@ -109,16 +109,22 @@ RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # # WORKDIR /myapp
 # RUN chown -R $USER_UID:$USER_GID /app
 
-RUN adduser --shell /bin/bash --home /lucky_app_user --disabled-password lucky_app_user
+RUN adduser --shell /bin/bash --home /home/$USERNAME --disabled-password $USERNAME
 
-ENV PATH="${PATH}:/lucky_app_user/.asdf/shims:/lucky_app_user/.asdf/bin"
+# Add sudo support
+RUN apt-get update \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+
+ENV PATH="${PATH}:/home/$USERNAME/.asdf/shims:/home/$USERNAME/.asdf/bin"
 ENV NODEJS_CHECK_SIGNATURES=no
 
 WORKDIR /app
 # WORKDIR /myapp
 RUN chown -R $USER_UID:$USER_GID /app
 
-USER lucky_app_user
+USER $USERNAME
 
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git $HOME/.asdf && \
     echo '. $HOME/.asdf/asdf.sh' >> $HOME/.bashrc && \
@@ -129,7 +135,7 @@ RUN asdf install nodejs latest
 RUN asdf global nodejs latest
 
 # With Ubuntu 18.04, this works. With alpine, this fails with the error:
-# /lucky_app_user/.asdf/lib/commands/command-exec.bash: line 28: /lucky_app_user/.asdf/installs/nodejs/17.3.0/bin/node: No such file or directory
+# /$USERNAME/.asdf/lib/commands/command-exec.bash: line 28: /$USERNAME/.asdf/installs/nodejs/17.3.0/bin/node: No such file or directory
 # STDERR: The command '/bin/sh -c node --version' returned a non-zero code: 127
 RUN node --version
 RUN npm -v
