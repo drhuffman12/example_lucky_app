@@ -8,22 +8,41 @@ on:
 
 jobs:
   check-format:
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     crystal_version:
+    #       - 1.2.2
+    #     experimental:
+    #       - false
     runs-on: ubuntu-latest
+    # continue-on-error: ${{ matrix.experimental }}
     container:
       image: crystallang/crystal:1.2.2
     steps:
       - uses: actions/checkout@v2
+      # - name: Install Crystal
+      #   uses: crystal-lang/install-crystal@v1
+      #   with:
+      #     crystal: ${{ matrix.crystal_version }
       - name: Format
         run: crystal tool format --check
 
   specs:
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     crystal_version:
+    #       - 1.2.2
+    #     experimental:
+    #       - false
     runs-on: ubuntu-latest
     container:
       image: crystallang/crystal:1.2.2
     env:
       LUCKY_ENV: test
       DB_HOST: postgres
-
+    # continue-on-error: ${{ matrix.experimental }}
     services:
       postgres:
         image: postgres:12-alpine
@@ -40,12 +59,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    # - name: Install Crystal
+    #     uses: crystal-lang/install-crystal@v1
+    #     with:
+    #       crystal: ${{ matrix.crystal_version }}
 
     - name: Install PostgreSQL client
       run: |
         apt-get update
         apt-get -yqq install libpq-dev postgresql-client
-        
+
     - name: Install browser
       run: apt-get -yqq install chromium-browser
 
@@ -95,7 +118,10 @@ jobs:
       if: steps.node-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile --no-progress
     - name: Compiling assets
-      run: yarn prod
+      run: |
+        yarn install
+        yarn add laravel-mix@latest
+        yarn prod
 
     - name: Build lucky_tasks
       if: steps.crystal-cache.outputs.cache-hit != 'true'
