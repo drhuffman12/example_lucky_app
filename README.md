@@ -2,10 +2,13 @@
 
 This is an example dockerized Lucky Framework app, initialized as an `full` (not `api` only) app and with default auth set up.
 
-Next steps: Add your migrations/scaffolds/tests/etc, as desired.
-
 TODO:
-- [ ] Unpend the 3 pend'ed tests and fix them (db conn issues).
+- [ ] Unpend/resolve the 3 pend'ed tests (db conn issues).
+
+Next steps:
+* Create a new repo.
+* Copy the contents of this repo (without the `.git` folder) to your new repo
+* Add your migrations/scaffolds/tests/etc, as desired.
 
 ---
 ## Build the container image and launch it
