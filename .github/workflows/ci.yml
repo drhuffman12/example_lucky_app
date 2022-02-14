@@ -45,6 +45,7 @@ jobs:
       run: |
         apt-get update
         apt-get -yqq install libpq-dev postgresql-client
+        
     - name: Install browser
       run: apt-get -yqq install chromium-browser
 
@@ -90,22 +91,21 @@ jobs:
       if: steps.crystal-cache.outputs.cache-hit != 'true'
       run: shards check || shards install
 
-    ## TODO: Uncomment below sections after basic Lucky app setup:
-    # - name: Install yarn packages
-    #   if: steps.node-cache.outputs.cache-hit != 'true'
-    #   run: yarn install --frozen-lockfile --no-progress
-    # - name: Compiling assets
-    #   run: yarn prod
+    - name: Install yarn packages
+      if: steps.node-cache.outputs.cache-hit != 'true'
+      run: yarn install --frozen-lockfile --no-progress
+    - name: Compiling assets
+      run: yarn prod
 
-    # - name: Build lucky_tasks
-    #   if: steps.crystal-cache.outputs.cache-hit != 'true'
-    #   run: crystal build tasks.cr -o ./lucky_tasks
+    - name: Build lucky_tasks
+      if: steps.crystal-cache.outputs.cache-hit != 'true'
+      run: crystal build tasks.cr -o ./lucky_tasks
 
-    # - name: Prepare database
-    #   run: |
-    #     ./lucky_tasks db.create
-    #     ./lucky_tasks db.migrate
-    #     ./lucky_tasks db.seed.required_data
+    - name: Prepare database
+      run: |
+        ./lucky_tasks db.create
+        ./lucky_tasks db.migrate
+        ./lucky_tasks db.seed.required_data
 
-    # - name: Run tests
-    #   run: SPEC_VERBOSE=1 crystal spec
+    - name: Run tests
+      run: SPEC_VERBOSE=1 crystal spec
