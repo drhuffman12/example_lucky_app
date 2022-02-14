@@ -1,8 +1,8 @@
 name: lucky_app
 version: 0.1.0
 
-authors:
-  - your-name-here <your-email-here>
+# authors:
+#   - your-name-here <your-email-here>
 
 authors:
   - Daniel Huffman <drhuffman12@gmail.com>
