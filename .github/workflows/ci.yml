@@ -141,4 +141,4 @@ jobs:
       run: SPEC_VERBOSE=1 crystal spec
 
     - name: Display app name and version
-      run: lucky my_app_task.version
+      run: ./lucky_tasks my_app_task.version

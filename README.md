@@ -5,9 +5,39 @@ This is an example dockerized Lucky Framework app, initialized as an `full` (not
 TODO:
 - [ ] Unpend/resolve the 3 pend'ed tests (db conn issues).
 
-Next steps:
-* Create a new repo.
-* Copy the contents of this repo (without the `.git` folder) to your new repo
+## USAGE
+* Clone (or fork) this repo, e.g.:
+  ```
+  git clone git@github.com:drhuffman12/example_lucky_app.git $MY_LUCKY_APP_NAME
+  cd $MY_LUCKY_APP_NAME
+  ```
+
+* Remove/rename the README.md file and/or replace with your own, e.g.:
+  ```
+  mv README.md README.OLD.md
+  echo "# $MY_LUCKY_APP_NAME" > README.md
+  ```
+
+* [Optionally] Clear/reset the git history and push it to either:
+  * a new repository on the command line
+    ```
+    git init
+    git add .
+    git commit -m "first commit"
+    git branch -M master
+    git remote remove origin
+    git remote add origin git@github.com:$YOUR_GITHUB_USER/$MY_LUCKY_APP_NAME.git
+    git push -u origin master
+    ```
+  * an existing repository from the command line
+    ```
+    git remote add origin git@github.com:$YOUR_GITHUB_USER/$MY_LUCKY_APP_NAME.git
+    git branch -M master
+    git push -u origin master
+    ```
+
+* If you're using github, check your repo's workflow at: https://github.com/drhuffman12/my_lucky_app/actions
+
 * Add your migrations/scaffolds/tests/etc, as desired.
 
 ---
