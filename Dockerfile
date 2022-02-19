@@ -117,7 +117,7 @@ USER $USERNAME
 
 ENV PATH="$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH"
 
-
+RUN crystal build tasks.cr -o ./lucky_tasks
 
 # Copy rest of app for now
 COPY . /app

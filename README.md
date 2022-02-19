@@ -5,9 +5,39 @@ This is an example dockerized Lucky Framework app, initialized as an `full` (not
 TODO:
 - [ ] Unpend/resolve the 3 pend'ed tests (db conn issues).
 
-Next steps:
-* Create a new repo.
-* Copy the contents of this repo (without the `.git` folder) to your new repo
+## USAGE
+* Clone (or fork) this repo, e.g.:
+  ```
+  git clone git@github.com:drhuffman12/example_lucky_app.git $MY_LUCKY_APP_NAME
+  cd $MY_LUCKY_APP_NAME
+  ```
+
+* Remove/rename the README.md file and/or replace with your own, e.g.:
+  ```
+  mv README.md README.OLD.md
+  echo "# $MY_LUCKY_APP_NAME" > README.md
+  ```
+
+* [Optionally] Clear/reset the git history and push it to either:
+  * a new repository on the command line
+    ```
+    git init
+    git add .
+    git commit -m "first commit"
+    git branch -M master
+    git remote remove origin
+    git remote add origin git@github.com:$YOUR_GITHUB_USER/$MY_LUCKY_APP_NAME.git
+    git push -u origin master
+    ```
+  * an existing repository from the command line
+    ```
+    git remote add origin git@github.com:$YOUR_GITHUB_USER/$MY_LUCKY_APP_NAME.git
+    git branch -M master
+    git push -u origin master
+    ```
+
+* If you're using github, check your repo's workflow at: https://github.com/drhuffman12/my_lucky_app/actions
+
 * Add your migrations/scaffolds/tests/etc, as desired.
 
 ---
@@ -35,6 +65,8 @@ Generate a model, set of actions, and HTML -> `lucky gen.resource.browser Post t
 Ask for ideas in our chatroom -> [https://discord.gg/HeqJUcb](https://discord.gg/HeqJUcb)
 ```
 
+![docs/example_lucky_app.home_page.png](docs/example_lucky_app.home_page.png)
+
 If you click on [VIEW YOUR NEW APP](http://localhost:3001/sign_up), it will take you to a page that asks you to create a user and which will have the following text:
 
 ```markdown
@@ -48,6 +80,8 @@ Confirm Password
 [Sign Up]
 [Sign in instead](http://localhost:3001/sign_in)
 ```
+
+![docs/example_lucky_app.sign_up.png](docs/example_lucky_app.sign_up.png)
 
 After creating a user, it will take you to the `me` profile page, which will have text like the following:
 
@@ -63,6 +97,8 @@ Next, you may want to:
 * Change where you go after sign in: src/actions/home/index.cr
 ```
 
+![docs/example_lucky_app.me.png](docs/example_lucky_app.me.png)
+
 ---
 ## Running tests
 
@@ -71,3 +107,10 @@ From the Host OS terminal, open a terminal into the container's image:
 
 From the Container's terminal, enter the following to run the tests:
 * `crystal spec`
+
+---
+## Versioning
+
+* To update the version, edit the `shard.yml` file's `version` value.
+
+* To view the version, run the `lucky my_app_task.version` task.
