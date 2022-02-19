@@ -1,4 +1,4 @@
-# example_lucky_app2
+# example_lucky_app
 
 This is an example dockerized Lucky Framework app, initialized as an `full` (not `api` only) app and with default auth set up.
 
@@ -6,7 +6,13 @@ TODO:
 - [ ] Unpend/resolve the 3 pend'ed tests (db conn issues).
 
 ## USAGE
-* Clone (or fork) this repo, e.g.:
+
+* Add a repo to your github (or gitlab or etc). (See their doc's as applicable.)
+  * Note your account and repo names; below, I'll refer to them as:
+    * account: $YOUR_GITHUB_USER
+    * repo name: $MY_LUCKY_APP_NAME
+
+* Clone (or fork) this (**example_lucky_app**) repo into a folder for your app, e.g.:
   ```
   git clone git@github.com:drhuffman12/example_lucky_app.git $MY_LUCKY_APP_NAME
   cd $MY_LUCKY_APP_NAME
@@ -18,23 +24,29 @@ TODO:
   echo "# $MY_LUCKY_APP_NAME" > README.md
   ```
 
-* [Optionally] Clear/reset the git history and push it to either:
-  * a new repository on the command line
-    ```
+* Clear/reset the git history
+  ```
     git init
-    git add .
-    git commit -m "first commit"
-    git branch -M master
+  ```
+
+* Change the `remote` to your repo
+  ```
     git remote remove origin
     git remote add origin git@github.com:$YOUR_GITHUB_USER/$MY_LUCKY_APP_NAME.git
-    git push -u origin master
-    ```
-  * an existing repository from the command line
-    ```
-    git remote add origin git@github.com:$YOUR_GITHUB_USER/$MY_LUCKY_APP_NAME.git
-    git branch -M master
-    git push -u origin master
-    ```
+  ```
+* Push to your repo as either:
+    * a new repository on the command line
+      ```
+      git add .
+      git commit -m "first commit"
+      git branch -M master
+      git push -u origin master
+      ```
+    * an existing repository from the command line
+      ```
+      git branch -M master
+      git push -u origin master
+      ```
 
 * If you're using github, check your repo's workflow at: https://github.com/drhuffman12/my_lucky_app/actions
 
