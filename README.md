@@ -35,6 +35,8 @@ Generate a model, set of actions, and HTML -> `lucky gen.resource.browser Post t
 Ask for ideas in our chatroom -> [https://discord.gg/HeqJUcb](https://discord.gg/HeqJUcb)
 ```
 
+![docs/example_lucky_app.home_page.png](docs/example_lucky_app.home_page.png)
+
 If you click on [VIEW YOUR NEW APP](http://localhost:3001/sign_up), it will take you to a page that asks you to create a user and which will have the following text:
 
 ```markdown
@@ -49,6 +51,8 @@ Confirm Password
 [Sign in instead](http://localhost:3001/sign_in)
 ```
 
+![docs/example_lucky_app.sign_up.png](docs/example_lucky_app.sign_up.png)
+
 After creating a user, it will take you to the `me` profile page, which will have text like the following:
 
 ```markdown
@@ -62,6 +66,8 @@ Next, you may want to:
 * Modify this page: src/pages/me/show_page.cr
 * Change where you go after sign in: src/actions/home/index.cr
 ```
+
+![docs/example_lucky_app.me.png](docs/example_lucky_app.me.png)
 
 ---
 ## Running tests
